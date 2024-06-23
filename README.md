@@ -3,12 +3,12 @@ I'm not a programmer by trade but I'd like to share my nonsense.
 How to use:
 
     format luks sde
-Will...<BR>$nbsp;$nbsp;$nbsp;$nbsp;
-prompt the user to type "YES"<BR>$nbsp;$nbsp;$nbsp;$nbsp;
-    ask for a password<BR>$nbsp;$nbsp;$nbsp;$nbsp;
-    luksFormat the device<BR>$nbsp;$nbsp;$nbsp;$nbsp;
-    luksOpen the device<BR>$nbsp;$nbsp;$nbsp;$nbsp;
-    format the mapped (opened) device<BR>$nbsp;$nbsp;$nbsp;$nbsp;
+Will...<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+prompt the user to type "YES"<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    ask for a password<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    luksFormat the device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    luksOpen the device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    format the mapped (opened) device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
     and luksClose the device<BR>
 
 Running...
