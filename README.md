@@ -3,13 +3,13 @@ I'm not a programmer by trade but I'd like to share my nonsense.
 How to use:
 
     format luks sde
-Will...
-    prompt the user to type "YES"
-    ask for a password
-    luksFormat the device
-    luksOpen the device
-    format the mapped (opened) device
-    and luksClose the device
+Will...<BR>
+    prompt the user to type "YES"<BR>
+    ask for a password<BR>
+    luksFormat the device<BR>
+    luksOpen the device<BR>
+    format the mapped (opened) device<BR>
+    and luksClose the device<BR>
 
 Running...
 
