@@ -1,0 +1,122 @@
+#!/bin/bash
+
+PURPLE="\e[0;35m"
+BLUE="\e[1;34m"
+WHITE="\e[1;37m"
+NOCOLOR="\e[m"
+
+User="$(whoami)"
+if [[ ! $User == "root" ]]; then
+	SUDO="sudo"; fi
+
+function EchoRun {
+	echo -e $PURPLE"$1 $2 $3 $4 $5 $6 $7 $8 $9"$NOCOLOR
+	$SUDO $1 $2 $3 $4 $5 $6 $7 $8 $9
+}
+
+function KeepFirst {
+	SedString="s/^\(.\{"$1"\}\).*/\1/"
+	sed $SedString
+}
+
+function KeepLast {
+	SedString="s/^.*\(.\{"$1"\}\)$/\1/"
+	sed $SedString
+}
+
+function RemoveFirst {
+	SedString="s/^.\{"$1"\}//"
+	sed $SedString
+}
+
+function RemoveLast {
+	SedString="s/.\{"$1"\}$//"
+	sed $SedString
+}
+
+
+
+function GetPassphrase {
+	Passphrase="am5fjQs6dgl"
+	Passphras2="ji!al9Xndfj"
+	while [[ ! $Passphrase == $Passphras2 ]]; do
+		read -s -p "Enter passphrase for /dev/$Dev: " Passphrase; echo
+		read -s -p "Verify passphrase: " Passphras2; echo
+		if [[ ! $Passphrase == $Passphras2 ]]; then
+			echo -e "Passphrases do not match.\n"; fi
+		echo
+	done
+}
+
+function FormatDevice {
+	if [[ $Mode == "luks" ]]; then
+		GetPassphrase
+		echo -e $PURPLE"echo -n Passphrase | cryptsetup -s 256 luksFormat -q /dev/$Dev -\n"$NOCOLOR
+		echo -n $Passphrase | $SUDO cryptsetup -s 256 luksFormat -q /dev/$Dev -
+
+		crypt="_crypt"
+		echo -e $PURPLE"echo -n Passphrase | cryptsetup luksOpen /dev/$Dev $Dev$crypt -\n"
+		echo -n $Passphrase | $SUDO cryptsetup luksOpen /dev/$Dev $Dev$crypt -
+
+		EchoRun mkfs.ext4 -F /dev/mapper/$Dev$crypt
+
+		sleep 1
+		EchoRun cryptsetup luksClose /dev/mapper/$Dev$crypt
+	else
+		case $FS in
+			ext2|ext3|ext4)	EchoRun mkfs.$FS -F /dev/$Dev;;
+			fat)		EchoRun mkfs.fat -F32 /dev/$Dev;;
+			ntfs)		EchoRun mkntfs --fast /dev/$Dev;;
+			btrfs)		EchoRun mkfs -t btrfs -f /dev/$Dev;;
+			*)		echo -e "Invalid filesystem \"$FS\"";;
+		esac; fi
+}
+
+if [[ $1 == "luks" || $1 == "luksFormat" || $1 == "encrypt" || $1 == "crypt" ]]; then
+	Mode="luks"
+	Dev="$2"
+elif [[ $2 == "luks" || $2 == "luksFormat" || $2 == "encrypt" || $2 == "crypt" ]]; then
+	Mode="luks"
+	Dev="$1"
+elif [[ $1 == "exfat" || $1 == "vfat" || $1 == "fat32" ]]; then
+	FS="fat"
+	Dev="$2"
+elif [[ $2 == "exfat" || $2 == "vfat" || $2 == "fat32" ]]; then
+	FS="fat"
+	Dev="$1"
+elif [[ $1 == "btrfs" || $1 == "ntfs" || $1 == "fat" || $1 == "ext2" || $1 == "ext3" || $1 == "ext4" ]]; then
+	FS="$1"
+	Dev="$2"
+elif [[ $2 == "btrfs" || $2 == "ntfs" || $2 == "fat" || $2 == "ext2" || $2 == "ext3" || $2 == "ext4" ]]; then
+	FS="$2"
+	Dev="$1"
+else
+	FS="ext4"
+	Dev="$1"; fi
+
+
+if [[ $(echo $Dev | RemoveLast 1) == "sd" ]]; then
+	Dev=$Dev"1"; fi
+
+
+DevType="$(echo $Dev | RemoveLast 2)"
+
+
+if [[ -z $Dev ]]; then
+	echo No device specified.
+
+elif [[ ! $DevType == "sd" ]]; then
+	echo -e "Unsupported Device \"$BLUE$Dev$NOCOLOR\""
+
+elif [[ -n $(lsblk | grep $Dev | grep "/") ]]; then
+	echo -e "\nThe Device $BLUE/dev/$Dev$NOCOLOR is still mounted!"
+	echo -e $PURPLE"Quitting..."$NOCOLOR
+else
+	echo -e "\nThis$WHITE will$NOCOLOR overwrite data on $BLUE/dev/$Dev$NOCOLOR$WHITE irrevocably.\n"$NOCOLOR
+	read -e -p "Are you sure? (Type 'yes' in capital letters): "
+
+	if [[ ! $REPLY == "YES" ]]; then
+		echo -e $PURPLE"Quitting..."$NOCOLOR
+	else
+		$SUDO echo
+		FormatDevice; fi; fi
