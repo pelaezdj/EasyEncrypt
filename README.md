@@ -4,12 +4,12 @@ How to use:
 
     format luks sde
 Will...<BR>&nbsp;&nbsp;&nbsp;&nbsp;
-1. prompt the user to type "YES"<BR>&nbsp;&nbsp;&nbsp;&nbsp;
-2. ask for a password<BR>&nbsp;&nbsp;&nbsp;&nbsp;
-3. luksFormat the device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
-4. luksOpen the device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
-5. format the mapped (opened) device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
-6. luksClose the device<BR>
+    1. prompt the user to type "YES"<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    2. ask for a password<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    3. luksFormat the device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    4. luksOpen the device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    5. format the mapped (opened) device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    6. luksClose the device<BR>
 
 Running...
 
