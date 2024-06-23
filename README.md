@@ -29,7 +29,7 @@ Will run the command:
 
     mkfs.ext4 -F /dev/sde1
 
-To format in FAT:
+To format "/dev/sde1" in the FAT filesystem:
 
     format sde fat
 or
