@@ -15,7 +15,7 @@ Running...
     ... and more
 Will all produce the same set of commands.
 
-The script also supports regular encryption:
+The script also supports normal format operations:
 
     format sde
 Will run the command:
