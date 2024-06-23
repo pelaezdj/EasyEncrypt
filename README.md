@@ -5,11 +5,11 @@ How to use:
     format luks sde
 Will...<BR>&nbsp;&nbsp;&nbsp;&nbsp;
 prompt the user to type "YES"<BR>&nbsp;&nbsp;&nbsp;&nbsp;
-    ask for a password<BR>&nbsp;&nbsp;&nbsp;&nbsp;
-    luksFormat the device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
-    luksOpen the device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
-    format the mapped (opened) device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
-    and luksClose the device<BR>
+    1. ask for a password<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    2. luksFormat the device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    3. luksOpen the device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    4. format the mapped (opened) device<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+    5. luksClose the device<BR>
 
 Running...
 
@@ -19,7 +19,8 @@ Running...
     format crypt sde
     format luksFormat sde1
     ... and more
-Will all produce the same set of commands.
+Will all do the same thing.
+
 
 The script also supports normal format operations:
 
